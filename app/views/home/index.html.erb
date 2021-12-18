@@ -1,0 +1,26 @@
+<div style="width: 100%; margin: 0px;height: 100vh; display: flex;">
+  <div style="border-right: 1px solid black; padding-right: 1rem; min-width: 18rem;">
+    <p>Please enter your <b>GitHub</b> login:<br>
+    <input id="user-login" type="text">
+    <button id="find-button">Find Repos</button>
+  </div>
+  <div>
+    <div id="result-user-data" style="width: auto; word-break: break-word; padding: 1rem;"></div>
+  </div>
+</div>
+
+<script>
+    $("#find-button").click(function() {
+        let userLogin = $("#user-login").val()
+        $.ajax({
+            url: '/repos/show',
+            type: 'GET',
+            dataType: 'script',
+            data: { user_login: userLogin },
+            success: function(result) {
+                result = JSON.parse(result);
+                $( "#result-user-data" ).append(result.data.body);
+            },
+        });
+    });
+</script>
